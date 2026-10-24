@@ -41,6 +41,44 @@ function Footer() {
     </footer>
   );
 }
+function DownloadNotice() {
+  const [visible, setVisible] = useState(() => localStorage.getItem('meme-muse-download-tip') !== 'hidden');
+  const [touchFirst, setTouchFirst] = useState(false);
+  useEffect(() => {
+    const pointer = window.matchMedia('(pointer: coarse)');
+    const update = () => setTouchFirst(pointer.matches || navigator.maxTouchPoints > 0);
+    update();
+    pointer.addEventListener('change', update);
+    return () => pointer.removeEventListener('change', update);
+  }, []);
+  if (!visible) return null;
+  return (
+    <aside className="download-notice" role="status">
+      <p>
+        <strong>Saving GIFs:</strong> Download opens the original image.{' '}
+        {touchFirst ? (
+          <>
+            Press and hold the image, then choose <b>Download image.</b>
+          </>
+        ) : (
+          <>
+            Right-click the image and choose <b>Save image as...</b>
+          </>
+        )}
+      </p>
+      <button
+        type="button"
+        onClick={() => {
+          localStorage.setItem('meme-muse-download-tip', 'hidden');
+          setVisible(false);
+        }}
+        aria-label="Dismiss GIF saving instructions"
+      >
+        ×
+      </button>
+    </aside>
+  );
+}
 function Card({ x }) {
   const [n, setN] = useState('');
   const link = x.url;
@@ -68,8 +106,8 @@ function Card({ x }) {
             href={x.original || x.preview}
             target="_blank"
             rel="noopener noreferrer"
-            download={`${x.id || 'meme-muse-gif'}.gif`}
-            aria-label={`Download ${x.title}`}
+            aria-label={`Open ${x.title} so you can save the GIF`}
+            title="Opens the original GIF so you can save it"
           >
             ↓ Download
           </a>
@@ -319,6 +357,7 @@ export default function App() {
   return (
     <>
       <Header />
+      {(path === '/' || path.startsWith('/categories/')) && <DownloadNotice />}
       {page}
       <Footer />
     </>

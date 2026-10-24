@@ -199,6 +199,38 @@ footer,
   letter-spacing: -0.05em;
   margin: 0;
 }
+.download-notice {
+  max-width: 1240px;
+  margin: 14px auto 0;
+  padding: 11px 24px;
+  border: 1px solid #bfd96a;
+  border-radius: 8px;
+  background: #eff9cb;
+  color: #25351b;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.download-notice p {
+  margin: 0;
+  flex: 1;
+}
+.download-notice button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink);
+  padding: 4px 8px;
+  font-size: 20px;
+  line-height: 1;
+}
+.download-notice button:hover,
+.download-notice button:focus-visible {
+  background: #dbeea2;
+}
 .grid {
   columns: 4 230px;
   column-gap: 17px;
@@ -386,6 +418,11 @@ footer small {
   .cats {
     padding-left: 17px;
     padding-right: 17px;
+  }
+  .download-notice {
+    margin: 10px 17px 0;
+    padding: 10px 12px;
+    align-items: flex-start;
   }
   .menu {
     display: block;
